@@ -21,6 +21,10 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
+    "paths": {
+      "@app/*":          ["src/app/*"],
+      "@environments/*": ["src/environments/*"]
+  },
   "files": [],
   "references": [
     {

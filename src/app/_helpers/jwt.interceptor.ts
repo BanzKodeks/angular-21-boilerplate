@@ -1,24 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpResponse,  } from '@angular/common/http';
+
+import {
+    HttpRequest,
+    HttpHandler,
+    HttpEvent,
+    HttpInterceptor
+} from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 
+import { AccountService } from '@app/_services';
 import { environment } from '@environments/environment';
-import { AlertService } from '@app/_services';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private accountServce: AccountService) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const account = this.accountServce.accountValue;
-        const isLoggedIn = account && account.jwtToken;
-        cons isApiUrl = request.url.startsWith(environment.apiUrl);
+    constructor(private accountService: AccountService) { }
+
+    intercept(
+        request: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
+
+        const account = this.accountService.accountValue;
+
+        const isLoggedIn = !!account?.jwtToken;
+
+        const isApiUrl = request.url.startsWith(environment.apiUrl);
+
         if (isLoggedIn && isApiUrl) {
-            request = request.clone({
-                setHeaders: { Authoriization: `Bearer ${account.JwtToken}` }
-            });
 
-            return next.handle(request);
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${account.jwtToken}`
+                }
+            });
         }
+
+        return next.handle(request);
     }
 }

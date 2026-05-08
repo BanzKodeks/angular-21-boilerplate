@@ -1,0 +1,45 @@
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark px-3" *ngIf="account">
+
+    <div class="navbar-nav">
+
+        <a class="nav-item nav-link" routerLink="/">
+            Home
+        </a>
+
+        <a class="nav-item nav-link" routerLink="/profile">
+            Profile
+        </a>
+
+        <a
+            *ngIf="account.role === Role.Admin"
+            class="nav-item nav-link"
+            routerLink="/admin"
+        >
+            Admin
+        </a>
+
+    </div>
+
+    <div class="navbar-nav ms-auto">
+
+        <span class="navbar-text me-3">
+            {{ account.firstName }} {{ account.lastName }}
+        </span>
+
+        <a class="nav-item nav-link" (click)="logout()">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<!-- main app container -->
+<div class="app-container" [ngClass]="{ 'bg-light': account }">
+
+    <alert></alert>
+
+    <router-outlet></router-outlet>
+
+</div>

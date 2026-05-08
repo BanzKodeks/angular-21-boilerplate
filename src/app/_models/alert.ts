@@ -3,7 +3,7 @@ export class Alert {
   type?: AlertType;
   message?: string;
   autoClose?: boolean;
-  keepAfterRbooleanouteChange?: boolean;
+  keepAfterRouteChange?: boolean;
   fade?: boolean;
   
   constructor(init?: Partial<Alert>) {
